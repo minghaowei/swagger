@@ -1,0 +1,312 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "NetworkCopilotManagementClient",
+        "version": "2024-06-01-preview"
+    },
+    "servers": {
+        "url": "https://brazilus.management.azure.com"
+    },
+    "paths": {
+        "/subscriptions/{subscriptionId}/providers/Microsoft.Network/copilot/default/reachabilityAnalysis": {
+            "post": {
+                "tags": [
+                    "ConnectivityAnalysis"
+                ],
+                "summary": "troubleshoot reachability issue",
+                "operationId": "ReachabilityAnalysis",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "subscriptionId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ReachabilityAnalysisRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AnalysisResult",
+                        "schema": {
+                            "$ref": "#/definitions/AnalysisResult"
+                        }
+                    },
+                    "default": {
+                        "description": "Default error response.",
+                        "schema": {
+                            "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/providers/Microsoft.Network/copilot/default/generalChat": {
+            "post": {
+                "tags": [
+                    "GeneralChatRequest"
+                ],
+                "operationId": "ReachabilityAnalysis",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "subscriptionId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GeneralChatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AnalysisResult",
+                        "schema": {
+                            "$ref": "#/definitions/AnalysisResult"
+                        }
+                    },
+                    "default": {
+                        "description": "Default error response.",
+                        "schema": {
+                            "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/providers/Microsoft.Network/copilot/default/resourceIssueAnalysis": {
+            "post": {
+                "tags": [
+                    "ResourceIssueAnalysis"
+                ],
+                "summary": "diagnosis resource issue",
+                "operationId": "ResourceIssueAnalysis",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "subscriptionId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ResourceIssueAnalysisRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "default": {
+                        "description": "Default error response.",
+                        "schema": {
+                            "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AnalysisIntent": {
+            "type": "object",
+            "properties": {
+                "sourceResourceId": {
+                    "type": "string"
+                },
+                "destinationResourceId": {
+                    "type": "string"
+                },
+                "ipTraffic": {
+                    "$ref": "#/definitions/IPTraffic"
+                },
+                "startTime": {
+                    "format": "date-span",
+                    "type": "string"
+                },
+                "endTime": {
+                    "format": "date-span",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "AnalysisResult": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "string"
+                },
+                "errorMessage": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "AnalysisScope": {
+            "type": "object",
+            "properties": {
+                "subscriptions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "managementGroups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "GeneralChatRequest": {
+            "type": "object",
+            "properties": {
+                "scope": {
+                    "$ref": "#/definitions/AnalysisScope"
+                },
+                "query": {
+                    "type": "string"
+                },
+                "userContext": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "IPTraffic": {
+            "type": "object",
+            "properties": {
+                "sourceIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "destinationIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sourcePorts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "destinationPorts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "protocols": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/NetworkProtocol"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "NetworkProtocol": {
+            "enum": [
+                "Any",
+                "TCP",
+                "UDP",
+                "ICMP"
+            ],
+            "type": "string"
+        },
+        "ReachabilityAnalysisRequest": {
+            "type": "object",
+            "properties": {
+                "intent": {
+                    "$ref": "#/definitions/AnalysisIntent"
+                },
+                "scope": {
+                    "$ref": "#/definitions/AnalysisScope"
+                },
+                "query": {
+                    "type": "string"
+                },
+                "userContext": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "ResourceIssueAnalysisRequest": {
+            "type": "object",
+            "properties": {
+                "resourceId": {
+                    "type": "string"
+                },
+                "scope": {
+                    "$ref": "#/definitions/AnalysisScope"
+                },
+                "query": {
+                    "type": "string"
+                },
+                "userContext": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "securityDefinitions": {
+        "azure_auth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+            "scopes": {
+                "user_impersonation": "impersonate your user account"
+            },
+            "description": "Azure Active Directory OAuth2 Flow."
+        }
+    },
+    "security": [
+        {
+            "azure_auth": [
+                "user_impersonation"
+            ]
+        }
+    ]
+}
